@@ -1,5 +1,18 @@
 # Histórico de versões
 
+## 2.3.0 - 28/08/2026
+
+- corrige os botões `X` e `Cancelar` do formulário, que eram bloqueados pela validação do campo obrigatório;
+- adiciona fechamento por toque fora do modal e pela tecla Escape;
+- limita campos de data, horário, seleção e texto à largura real do modal no iPhone;
+- reorganiza o formulário em uma coluna e adiciona rodapé de ações fixo durante a rolagem;
+- aumenta áreas de toque e melhora o comportamento com o teclado aberto;
+- adiciona padding aos avatares e corrige recortes dos emojis;
+- centraliza o símbolo `+` no botão de nova atividade;
+- revisa largura, quebra de texto e responsividade nas telas Hoje, Semana, Provas, Família e Ajustes;
+- elimina carregamento duplicado da camada mobile;
+- atualiza o cache da PWA.
+
 ## 2.2.1 - 28/08/2026
 
 - impede o zoom automático do Safari ao focar campos do formulário;
