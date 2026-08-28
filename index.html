@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" href="icons/app-icon.svg">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="cloud.css">
+  <link rel="stylesheet" href="mobile.css">
   <title>Agenda do Thomaz</title>
 </head>
 <body>
@@ -144,7 +145,7 @@
         <div class="section-heading">
           <div>
             <h2>Agenda da família</h2>
-            <p>Casa da mãe, casa do pai, compromissos e responsáveis.</p>
+            <p>Casa da mãe, casa do Fábio, compromissos e responsáveis.</p>
           </div>
         </div>
         <div class="family-layout">
@@ -183,7 +184,7 @@
           <article class="panel">
             <h3>Integrações</h3>
             <div class="integration-row"><span class="integration-icon">G</span><div><strong>Login Google</strong><small id="googleStatus">Aguardando configuração</small></div><button data-integration="google">Configurar</button></div>
-            <div class="integration-row"><span class="integration-icon">📅</span><div><strong>Google Calendar</strong><small>Agenda e dias na casa do pai</small></div><button data-integration="calendar">Configurar</button></div>
+            <div class="integration-row"><span class="integration-icon">📅</span><div><strong>Google Calendar</strong><small>Agenda e dias na casa do Fábio</small></div><button data-integration="calendar">Configurar</button></div>
             <div class="integration-row"><span class="integration-icon">✉️</span><div><strong>Agenda Edu</strong><small>Importação automática pelo Gmail</small></div><button data-integration="agendaedu">Configurar</button></div>
             <div class="integration-row"><span class="integration-icon">🔔</span><div><strong>Lembretes</strong><small>Push e avisos no calendário</small></div><button data-integration="notifications">Ativar</button></div>
           </article>
@@ -213,7 +214,7 @@
       </div>
       <label>Detalhes<textarea id="taskDetailsInput" name="details" rows="3" placeholder="Páginas, material, roupa ou orientação"></textarea></label>
       <div class="form-grid">
-        <label>Responsável<select id="taskOwnerInput" name="owner"><option value="Thomaz">Thomaz</option><option value="Rachel">Rachel</option><option value="Pai">Pai</option><option value="Família">Família</option></select></label>
+        <label>Responsável<select id="taskOwnerInput" name="owner"><option value="Thomaz">Thomaz</option><option value="Rachel">Rachel</option><option value="Fábio">Fábio</option><option value="Família">Família</option></select></label>
         <label>Horário<input id="taskTimeInput" name="time" type="time"></label>
       </div>
       <label class="checkbox-row"><input id="taskAdultInput" name="adult" type="checkbox"> Precisa de preparação de um adulto</label>
@@ -232,6 +233,7 @@
   <script src="runtime-config.js" defer></script>
   <script src="app.js" defer></script>
   <script src="bridge.js" defer></script>
+  <script src="mobile-ui.js" defer></script>
   <script type="module" src="cloud.js"></script>
 </body>
 </html>
