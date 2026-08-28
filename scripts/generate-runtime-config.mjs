@@ -17,6 +17,29 @@ const config = {
   }
 };
 
-const output = `window.__AGENDA_CONFIG__ = ${JSON.stringify(config, null, 2)};\n`;
+const mobileLoader = `
+(() => {
+  if (!document.querySelector('link[data-agenda-mobile]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'mobile.css';
+    link.dataset.agendaMobile = 'true';
+    document.head.appendChild(link);
+  }
+
+  const loadMobileUI = () => {
+    if (document.querySelector('script[data-agenda-mobile]')) return;
+    const script = document.createElement('script');
+    script.src = 'mobile-ui.js';
+    script.dataset.agendaMobile = 'true';
+    document.body.appendChild(script);
+  };
+
+  if (document.readyState === 'complete') loadMobileUI();
+  else window.addEventListener('load', loadMobileUI, { once: true });
+})();
+`;
+
+const output = `window.__AGENDA_CONFIG__ = ${JSON.stringify(config, null, 2)};\n${mobileLoader}`;
 writeFileSync('runtime-config.js', output, 'utf8');
 console.log('runtime-config.js gerado para o deploy.');
