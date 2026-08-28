@@ -1,0 +1,355 @@
+/* Acabamento responsivo e correções de UX para telas móveis. */
+@media (max-width: 820px) {
+  html,
+  body,
+  .app-shell,
+  .main-content,
+  .view,
+  .panel,
+  .hero-grid,
+  .family-layout,
+  .settings-grid,
+  .test-grid,
+  .week-board,
+  .calendar-panel,
+  .task-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  html,
+  body,
+  .app-shell,
+  .main-content {
+    overflow-x: clip;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+  }
+
+  .topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 12px;
+  }
+
+  .topbar > div:first-child,
+  .topbar h1 {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .topbar-actions {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .topbar-actions .icon-button,
+  .topbar-actions .primary-button {
+    display: grid !important;
+    place-items: center !important;
+    flex: 0 0 44px;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 !important;
+    line-height: 1;
+  }
+
+  .topbar-actions .primary-button > span {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+    margin: 0;
+    font-size: 25px !important;
+    line-height: 1;
+    transform: translateY(-1px);
+  }
+
+  .family-avatars {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 7px 12px;
+    gap: 12px;
+    overflow-y: visible;
+    scroll-padding-inline: 8px;
+  }
+
+  .avatar-button {
+    display: grid;
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+    place-items: center;
+    padding: 7px;
+    overflow: visible;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .avatar-button.active {
+    outline-offset: 3px;
+  }
+
+  .mobile-profile-avatar {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    padding: 5px;
+    overflow: visible;
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .task-dialog,
+  .info-dialog,
+  .mobile-reward-dialog {
+    width: calc(100dvw - 20px) !important;
+    max-width: 620px !important;
+    max-height: calc(100dvh - 20px) !important;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .task-dialog[open],
+  .info-dialog[open],
+  .mobile-reward-dialog[open] {
+    display: block;
+  }
+
+  .task-dialog form,
+  .info-dialog,
+  .mobile-reward-inner {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    max-height: calc(100dvh - 20px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .task-dialog form {
+    padding: 22px 18px calc(20px + env(safe-area-inset-bottom));
+  }
+
+  .dialog-header {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    align-items: flex-start;
+    padding: 2px 0 12px;
+    background: linear-gradient(#fff 82%, rgba(255,255,255,0));
+  }
+
+  .dialog-header > div {
+    min-width: 0;
+  }
+
+  .dialog-header h2 {
+    max-width: 100%;
+    margin-top: 12px;
+    font-size: clamp(25px, 7.2vw, 34px);
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .close-button,
+  .mobile-reward-close {
+    display: grid;
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    min-height: 46px;
+    flex: 0 0 46px;
+    place-items: center;
+    padding: 0;
+    line-height: 1;
+    touch-action: manipulation;
+  }
+
+  .task-dialog label,
+  .form-grid,
+  .form-grid > label,
+  .task-dialog input,
+  .task-dialog select,
+  .task-dialog textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+  }
+
+  .task-dialog input,
+  .task-dialog select,
+  .task-dialog textarea {
+    display: block;
+    inline-size: 100%;
+    min-height: 58px;
+    padding-inline: 16px;
+    border-radius: 17px;
+    font-size: 16px !important;
+  }
+
+  .task-dialog textarea {
+    min-height: 120px;
+    padding-top: 15px;
+    resize: vertical;
+  }
+
+  .task-dialog input[type="date"],
+  .task-dialog input[type="time"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  .task-dialog input[type="date"]::-webkit-date-and-time-value,
+  .task-dialog input[type="time"]::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
+  }
+
+  .task-dialog select {
+    padding-right: 44px;
+  }
+
+  .checkbox-row {
+    display: grid !important;
+    grid-template-columns: 46px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    line-height: 1.35;
+  }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 46px;
+    height: 46px;
+    min-height: 46px;
+    margin: 0;
+  }
+
+  .dialog-actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 18px -4px -6px;
+    padding: 14px 4px calc(6px + env(safe-area-inset-bottom));
+    background: linear-gradient(rgba(255,255,255,0), #fff 24%);
+  }
+
+  .dialog-actions > button {
+    width: 100%;
+    min-height: 52px;
+    margin: 0;
+  }
+
+  .week-board {
+    grid-template-columns: repeat(5, minmax(min(82vw, 430px), 1fr));
+    scroll-padding-inline: 8px;
+  }
+
+  .day-column,
+  .test-card,
+  .panel,
+  .attention-card,
+  .task-card,
+  .countdown-card,
+  .focus-card {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .calendar-day {
+    grid-template-columns: 58px minmax(0, 1fr);
+  }
+
+  .calendar-events,
+  .calendar-event,
+  .responsibility-item > div,
+  .integration-row > div,
+  .cloud-user > div {
+    min-width: 0;
+  }
+
+  .calendar-event,
+  .responsibility-item small,
+  .integration-row small,
+  .cloud-user small {
+    overflow-wrap: anywhere;
+  }
+
+  .family-access-row,
+  .integration-row {
+    max-width: 100%;
+  }
+
+  .family-access-row input,
+  .family-access-row button,
+  .integration-row button,
+  .cloud-actions button {
+    min-height: 46px;
+  }
+
+  .mobile-nav button {
+    min-width: 0;
+    min-height: 50px;
+    padding: 4px 2px;
+  }
+
+  .mobile-nav button span {
+    display: block;
+    line-height: 1;
+  }
+
+  .toast {
+    bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 390px) {
+  .topbar {
+    gap: 8px;
+  }
+
+  .topbar-actions {
+    gap: 6px;
+  }
+
+  .family-avatars {
+    padding-inline: 5px;
+    gap: 10px;
+  }
+
+  .avatar-button {
+    width: 54px;
+    height: 54px;
+    flex-basis: 54px;
+  }
+
+  .task-dialog form {
+    padding-inline: 15px;
+  }
+
+  .dialog-actions {
+    grid-template-columns: 1fr;
+  }
+}
