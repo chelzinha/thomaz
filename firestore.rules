@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null && request.auth.token.email != null;
+    }
+
+    function isRachel() {
+      return signedIn() && request.auth.token.email == 'chelzinha@gmail.com';
+    }
+
+    function familyData(familyId) {
+      return get(/databases/$(database)/documents/families/$(familyId)).data;
+    }
+
+    function isAllowed(familyId) {
+      return signedIn() && (
+        isRachel()
+        || familyData(familyId).allowedEmails[request.auth.token.email] == true
+      );
+    }
+
+    function isAdmin(familyId) {
+      return isRachel() || (
+        isAllowed(familyId)
+        && familyData(familyId).admins[request.auth.uid] == true
+      );
+    }
+
+    match /families/{familyId} {
+      allow create: if isRachel();
+      allow read: if signedIn() && (
+        isRachel()
+        || resource.data.allowedEmails[request.auth.token.email] == true
+      );
+      allow update, delete: if isAdmin(familyId);
+
+      match /members/{memberId} {
+        allow read: if isAllowed(familyId);
+        allow create, update: if isAllowed(familyId)
+          && (memberId == request.auth.uid || isAdmin(familyId));
+        allow delete: if isAdmin(familyId);
+      }
+
+      match /tasks/{taskId} {
+        allow read, create, update, delete: if isAllowed(familyId);
+      }
+    }
+  }
+}
