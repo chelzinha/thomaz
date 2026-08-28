@@ -52,41 +52,38 @@ const mobileLoader = `
         textarea {
           font-size: 16px !important;
         }
-
-        .task-dialog,
-        .info-dialog {
-          max-width: calc(100vw - 20px);
-          overflow-x: hidden;
-        }
-
-        .task-dialog form,
-        .info-dialog {
-          max-width: 100%;
-          overflow-x: hidden;
-        }
       }
     \`;
     document.head.appendChild(style);
   }
 
-  if (!document.querySelector('link[data-agenda-mobile]')) {
+  const loadStylesheet = (href, marker) => {
+    if (document.querySelector(\`link[data-\${marker}]\`) || document.querySelector(\`link[href$="\${href}"]\`)) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'mobile.css';
-    link.dataset.agendaMobile = 'true';
+    link.href = href;
+    link.dataset[marker] = 'true';
     document.head.appendChild(link);
-  }
+  };
 
-  const loadMobileUI = () => {
-    if (document.querySelector('script[data-agenda-mobile]')) return;
+  const loadScript = (src, marker) => {
+    if (document.querySelector(\`script[data-\${marker}]\`) || document.querySelector(\`script[src$="\${src}"]\`)) return;
     const script = document.createElement('script');
-    script.src = 'mobile-ui.js';
-    script.dataset.agendaMobile = 'true';
+    script.src = src;
+    script.dataset[marker] = 'true';
     document.body.appendChild(script);
   };
 
-  if (document.readyState === 'complete') loadMobileUI();
-  else window.addEventListener('load', loadMobileUI, { once: true });
+  loadStylesheet('mobile.css', 'agendaMobile');
+  loadStylesheet('ux-cleanup.css', 'agendaUxCleanup');
+
+  const loadEnhancements = () => {
+    loadScript('mobile-ui.js', 'agendaMobile');
+    loadScript('ux-cleanup.js', 'agendaUxCleanup');
+  };
+
+  if (document.readyState === 'complete') loadEnhancements();
+  else window.addEventListener('load', loadEnhancements, { once: true });
 })();
 `;
 
