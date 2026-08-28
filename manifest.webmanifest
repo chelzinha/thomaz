@@ -1,0 +1,21 @@
+{
+  "name": "Agenda do Thomaz",
+  "short_name": "Thomaz",
+  "description": "Agenda familiar visual para tarefas, provas, materiais e compromissos.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f6f7fc",
+  "theme_color": "#6658d3",
+  "categories": ["education", "productivity", "family"],
+  "icons": [
+    {
+      "src": "icons/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
