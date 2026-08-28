@@ -6,7 +6,7 @@
 
   const POINTS = { school: 15, prepare: 10, test: 20, extra: 10, family: 10 };
   const ICONS = { school: '📚', prepare: '🎒', test: '🧠', extra: '🥋', family: '🏠' };
-  const PROFILE_ICONS = { Thomaz: '🧑‍🚀', Rachel: '👩‍💻', Pai: '👨', Dora: '💃', Família: '🏡' };
+  const PROFILE_ICONS = { Thomaz: '🧑‍🚀', Rachel: '👩‍💻', Fábio: '👨', Dora: '💃', Família: '🏡' };
   const PERIODS = {
     all: () => true,
     morning: hour => hour < 12,
