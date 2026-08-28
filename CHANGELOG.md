@@ -1,5 +1,15 @@
 # Histórico de versões
 
+## 2.2.0 - 28/08/2026
+
+- remove automaticamente a atividade demonstrativa de judô e referências a kimono;
+- migra dados já salvos no navegador para excluir essa atividade;
+- renomeia o perfil `Pai` para `Fábio` em avatares, responsáveis e modos de visualização;
+- altera a indicação de permanência para `Casa do Fábio`;
+- normaliza dados antigos recebidos do calendário ou da futura sincronização;
+- ativa explicitamente a camada visual mobile no HTML principal;
+- atualiza o cache da PWA.
+
 ## 2.1.0 - 28/08/2026
 
 - redesenha a experiência mobile com foco em crianças com TDAH;
