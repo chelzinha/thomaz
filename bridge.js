@@ -12,31 +12,59 @@
   };
 
   const emit = (name, detail) => window.dispatchEvent(new CustomEvent(name, { detail }));
+  const falseActivityPattern = /\bjud[ôo]\b|kimono/i;
 
-  function normalizeKnownDates(tasks) {
+  function normalizeTasks(tasks) {
     let changed = false;
-    const normalized = (Array.isArray(tasks) ? tasks : []).map(task => {
-      const title = String(task?.title || '');
-      const details = String(task?.details || '');
+    const normalized = [];
+
+    for (const originalTask of Array.isArray(tasks) ? tasks : []) {
+      const title = String(originalTask?.title || '');
+      const details = String(originalTask?.details || '');
+
+      if (falseActivityPattern.test(`${title} ${details}`)) {
+        changed = true;
+        continue;
+      }
+
+      let task = { ...originalTask };
+      if (task.owner === 'Pai') {
+        task.owner = 'Fábio';
+        changed = true;
+      }
+
       const isFbFamily = /fb\s*&\s*fam[ií]lia/i.test(title)
         && /dia dos pais/i.test(details);
-
       if (isFbFamily && task.date !== '2026-08-29') {
-        changed = true;
-        return {
+        task = {
           ...task,
           date: '2026-08-29',
           time: task.time || '09:40'
         };
+        changed = true;
       }
-      return task;
-    });
+
+      normalized.push(task);
+    }
+
     return { tasks: normalized, changed };
   }
 
-  const initialMigration = normalizeKnownDates(state.tasks);
-  if (initialMigration.changed) {
-    state = { ...state, tasks: initialMigration.tasks };
+  const fatherProfile = FAMILY.find(person => person.name === 'Pai');
+  if (fatherProfile) {
+    fatherProfile.name = 'Fábio';
+    fatherProfile.initial = 'F';
+    fatherProfile.role = 'Pai';
+  }
+
+  const initialMigration = normalizeTasks(state.tasks);
+  const migratedProfile = state.activeProfile === 'Pai' ? 'Fábio' : state.activeProfile;
+  if (initialMigration.changed || migratedProfile !== state.activeProfile) {
+    state = {
+      ...state,
+      activeProfile: migratedProfile,
+      tasks: initialMigration.tasks
+    };
     nativeSaveState();
   }
 
@@ -57,18 +85,20 @@
       .map(task => `${task.title} ${task.details || ''}`)
       .join(' ');
 
-    if (/\bf[aá]bio\b|casa do pai|com o pai|dormir.*pai|pai.*fim de semana/i.test(calendarText)) return 'Casa do pai';
+    if (/\bf[aá]bio\b|casa do pai|com o pai|dormir.*pai|pai.*fim de semana/i.test(calendarText)) return 'Casa do Fábio';
     if (/\brachel\b|casa da m[aã]e|com a m[aã]e|dormir.*m[aã]e/i.test(calendarText)) return 'Casa da mãe';
-    return nativeCustodyFor(date);
+
+    const fallback = nativeCustodyFor(date);
+    return fallback === 'Casa do pai' ? 'Casa do Fábio' : fallback;
   };
 
   window.AgendaThomaz = {
-    version: '2.0.1',
+    version: '2.2.0',
     getState: () => clone(state),
     getSettings: () => clone(settings),
 
     applyCloudTasks(tasks) {
-      const normalized = normalizeKnownDates(tasks);
+      const normalized = normalizeTasks(tasks);
       applyingRemoteState = true;
       state = { ...state, tasks: normalized.tasks.map(task => ({ ...task })) };
       nativeSaveState();
@@ -78,9 +108,9 @@
     },
 
     mergeCalendarEvents(calendarTasks) {
-      const incoming = Array.isArray(calendarTasks) ? calendarTasks : [];
+      const incoming = normalizeTasks(calendarTasks).tasks;
       const existingById = new Map(state.tasks.map(task => [task.id, task]));
-      const localTasks = state.tasks.filter(task => task.source !== 'Google Calendar');
+      const localTasks = normalizeTasks(state.tasks.filter(task => task.source !== 'Google Calendar')).tasks;
       const merged = incoming.map(task => {
         const previous = existingById.get(task.id);
         return {
@@ -98,7 +128,8 @@
     patchTask(taskId, patch) {
       const task = state.tasks.find(item => item.id === taskId);
       if (!task) return false;
-      Object.assign(task, patch);
+      const normalizedPatch = patch?.owner === 'Pai' ? { ...patch, owner: 'Fábio' } : patch;
+      Object.assign(task, normalizedPatch);
       saveState();
       renderAll();
       return true;
