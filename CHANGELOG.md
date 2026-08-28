@@ -1,5 +1,13 @@
 # Histórico de versões
 
+## 2.2.1 - 28/08/2026
+
+- impede o zoom automático do Safari ao focar campos do formulário;
+- define tamanho mínimo de 16 px para `input`, `select` e `textarea` no mobile;
+- limita a escala da viewport e evita rolagem horizontal durante a digitação;
+- ajusta os diálogos para permanecerem dentro da largura da tela;
+- atualiza o cache da PWA.
+
 ## 2.2.0 - 28/08/2026
 
 - remove automaticamente a atividade demonstrativa de judô e referências a kimono;
