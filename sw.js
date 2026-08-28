@@ -1,9 +1,13 @@
-const CACHE_NAME = 'agenda-thomaz-v1';
+const CACHE_NAME = 'agenda-thomaz-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/styles.css',
+  '/cloud.css',
+  '/runtime-config.js',
   '/app.js',
+  '/bridge.js',
+  '/cloud.js',
   '/manifest.webmanifest',
   '/icons/app-icon.svg'
 ];
