@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6658d3">
+  <meta name="description" content="Agenda familiar visual do Thomaz">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/app-icon.svg">
+  <link rel="stylesheet" href="styles.css">
+  <title>Agenda do Thomaz</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <div>
+          <strong>Agenda do Thomaz</strong>
+          <span>Família organizada, mente leve</span>
+        </div>
+      </div>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="today"><span>☀️</span> Hoje</button>
+        <button class="nav-item" data-view="week"><span>🗓️</span> Semana</button>
+        <button class="nav-item" data-view="tests"><span>🧠</span> Provas</button>
+        <button class="nav-item" data-view="family"><span>🏠</span> Família</button>
+        <button class="nav-item" data-view="settings"><span>⚙️</span> Ajustes</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="mini-label">Progresso da semana</div>
+        <div class="progress-ring" id="weeklyRing" aria-label="Progresso da semana">
+          <span id="weeklyProgress">0%</span>
+        </div>
+        <p>Pequenos passos contam.</p>
+      </div>
+
+      <button class="google-button" id="googleLoginButton">
+        <span class="google-g">G</span>
+        Entrar com Google
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayLabel">Hoje</p>
+          <h1 id="pageTitle">Bom dia, família!</h1>
+          <p class="subtitle" id="pageSubtitle">Vamos enxergar somente o próximo passo.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="notificationButton" title="Ativar lembretes" aria-label="Ativar lembretes">🔔</button>
+          <button class="primary-button" id="addTaskButton"><span>＋</span> Nova atividade</button>
+        </div>
+      </header>
+
+      <section class="family-strip" aria-label="Pessoas da família">
+        <div class="family-avatars" id="familyAvatars"></div>
+        <div class="custody-card">
+          <span class="custody-icon">🏡</span>
+          <div>
+            <small>Hoje o Thomaz está</small>
+            <strong id="custodyText">Casa da mãe</strong>
+          </div>
+          <button id="openCalendarButton">Ver calendário</button>
+        </div>
+      </section>
+
+      <section class="view active" id="view-today">
+        <div class="hero-grid">
+          <article class="focus-card">
+            <div class="focus-copy">
+              <span class="pill purple">FOCO DE AGORA</span>
+              <h2 id="focusTitle">Começar pela tarefa mais rápida</h2>
+              <p id="focusDescription">Quando terminar, marque o checklist e escolha o próximo passo.</p>
+              <button class="focus-action" id="focusActionButton">Começar agora</button>
+            </div>
+            <div class="focus-illustration" aria-hidden="true">🚀</div>
+          </article>
+
+          <article class="countdown-card" id="nextCountdownCard">
+            <div class="countdown-top">
+              <span class="countdown-icon" id="countdownIcon">🧠</span>
+              <span class="pill coral">CONTAGEM REGRESSIVA</span>
+            </div>
+            <div class="countdown-number" id="countdownNumber">3</div>
+            <div class="countdown-unit" id="countdownUnit">dias</div>
+            <strong id="countdownTitle">Próxima prova</strong>
+            <p id="countdownMeta">Matemática</p>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h2>Checklist de hoje</h2>
+            <p id="todayProgressText">0 de 0 concluídas</p>
+          </div>
+          <div class="filter-chips" id="todayFilters">
+            <button class="chip active" data-filter="all">Tudo</button>
+            <button class="chip" data-filter="school">📚 Escola</button>
+            <button class="chip" data-filter="prepare">🎒 Preparar</button>
+            <button class="chip" data-filter="extra">🥋 Extras</button>
+          </div>
+        </div>
+
+        <div class="task-list" id="todayTaskList"></div>
+
+        <section class="attention-section">
+          <div class="section-heading compact">
+            <div>
+              <h2>Não deixar para depois</h2>
+              <p>Preparativos que precisam de um adulto.</p>
+            </div>
+          </div>
+          <div class="attention-grid" id="attentionGrid"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-week">
+        <div class="section-heading">
+          <div>
+            <h2>Visão da semana</h2>
+            <p>Uma coluna por dia, sem excesso de informação.</p>
+          </div>
+        </div>
+        <div class="week-board" id="weekBoard"></div>
+      </section>
+
+      <section class="view" id="view-tests">
+        <div class="section-heading">
+          <div>
+            <h2>Provas e avaliações</h2>
+            <p>Contagem regressiva, conteúdo e plano de estudo.</p>
+          </div>
+        </div>
+        <div class="test-grid" id="testGrid"></div>
+      </section>
+
+      <section class="view" id="view-family">
+        <div class="section-heading">
+          <div>
+            <h2>Agenda da família</h2>
+            <p>Casa da mãe, casa do pai, compromissos e responsáveis.</p>
+          </div>
+        </div>
+        <div class="family-layout">
+          <article class="panel calendar-panel">
+            <div class="panel-title">
+              <h3>Próximos dias</h3>
+              <button class="text-button" id="syncCalendarButton">Sincronizar Google Calendar</button>
+            </div>
+            <div id="familyCalendar"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-title"><h3>Quem cuida do quê</h3></div>
+            <div class="responsibility-list" id="responsibilityList"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="settings-grid">
+          <article class="panel">
+            <h3>Acessibilidade e foco</h3>
+            <label class="setting-row">
+              <span><strong>Modo foco</strong><small>Mostra apenas uma tarefa por vez.</small></span>
+              <input type="checkbox" id="focusModeToggle">
+            </label>
+            <label class="setting-row">
+              <span><strong>Reduzir estímulos</strong><small>Remove animações e elementos decorativos.</small></span>
+              <input type="checkbox" id="reduceStimuliToggle">
+            </label>
+            <label class="setting-row">
+              <span><strong>Sons de conclusão</strong><small>Confirma quando uma tarefa é marcada.</small></span>
+              <input type="checkbox" id="soundToggle" checked>
+            </label>
+          </article>
+
+          <article class="panel">
+            <h3>Integrações</h3>
+            <div class="integration-row"><span class="integration-icon">G</span><div><strong>Login Google</strong><small id="googleStatus">Aguardando configuração</small></div><button data-integration="google">Configurar</button></div>
+            <div class="integration-row"><span class="integration-icon">📅</span><div><strong>Google Calendar</strong><small>Agenda e dias na casa do pai</small></div><button data-integration="calendar">Configurar</button></div>
+            <div class="integration-row"><span class="integration-icon">✉️</span><div><strong>Agenda Edu</strong><small>Importação automática pelo Gmail</small></div><button data-integration="agendaedu">Configurar</button></div>
+            <div class="integration-row"><span class="integration-icon">🔔</span><div><strong>Lembretes</strong><small>Push e avisos no calendário</small></div><button data-integration="notifications">Ativar</button></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navegação móvel">
+    <button class="active" data-view="today"><span>☀️</span>Hoje</button>
+    <button data-view="week"><span>🗓️</span>Semana</button>
+    <button data-view="tests"><span>🧠</span>Provas</button>
+    <button data-view="family"><span>🏠</span>Família</button>
+  </nav>
+
+  <dialog id="taskDialog" class="task-dialog">
+    <form method="dialog" id="taskForm">
+      <div class="dialog-header">
+        <div><span class="pill purple">NOVA ATIVIDADE</span><h2>O que precisa ser feito?</h2></div>
+        <button class="close-button" value="cancel" aria-label="Fechar">×</button>
+      </div>
+
+      <label>Título<input id="taskTitleInput" name="title" required placeholder="Ex.: Separar blusa laranja"></label>
+      <div class="form-grid">
+        <label>Tipo<select id="taskTypeInput" name="type"><option value="school">📚 Tarefa escolar</option><option value="prepare">🎒 Preparar material</option><option value="test">🧠 Prova</option><option value="extra">🥋 Extracurricular</option><option value="family">🏠 Família</option></select></label>
+        <label>Data<input id="taskDateInput" name="date" type="date" required></label>
+      </div>
+      <label>Detalhes<textarea id="taskDetailsInput" name="details" rows="3" placeholder="Páginas, material, roupa ou orientação"></textarea></label>
+      <div class="form-grid">
+        <label>Responsável<select id="taskOwnerInput" name="owner"><option value="Thomaz">Thomaz</option><option value="Rachel">Rachel</option><option value="Pai">Pai</option><option value="Família">Família</option></select></label>
+        <label>Horário<input id="taskTimeInput" name="time" type="time"></label>
+      </div>
+      <label class="checkbox-row"><input id="taskAdultInput" name="adult" type="checkbox"> Precisa de preparação de um adulto</label>
+      <div class="dialog-actions"><button value="cancel" class="secondary-button">Cancelar</button><button type="submit" value="default" class="primary-button">Salvar atividade</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="infoDialog" class="info-dialog">
+    <div class="dialog-header"><div><span class="pill purple">PRÓXIMA ETAPA</span><h2 id="infoDialogTitle">Integração</h2></div><button class="close-button" id="closeInfoDialog" aria-label="Fechar">×</button></div>
+    <div id="infoDialogContent"></div>
+    <button class="primary-button full" id="infoDialogOk">Entendi</button>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
