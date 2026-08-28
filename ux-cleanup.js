@@ -83,6 +83,6 @@
   setupDialog(infoDialog, closeInfoDialog);
 
   window.addEventListener('orientationchange', () => {
-    window.setTimeout(() => window.scrollTo({ left: 0, behavior: 'instant' }), 150);
+    window.setTimeout(() => window.scrollTo({ left: 0, behavior: 'auto' }), 150);
   });
 })();
