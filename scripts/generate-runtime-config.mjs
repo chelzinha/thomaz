@@ -19,6 +19,56 @@ const config = {
 
 const mobileLoader = `
 (() => {
+  const viewport = document.querySelector('meta[name="viewport"]');
+  if (viewport) {
+    viewport.setAttribute(
+      'content',
+      'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover'
+    );
+  }
+
+  if (!document.querySelector('style[data-agenda-ios-fix]')) {
+    const style = document.createElement('style');
+    style.dataset.agendaIosFix = 'true';
+    style.textContent = \`
+      @media (max-width: 820px) {
+        html {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+          -webkit-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+        }
+
+        body {
+          width: 100%;
+          max-width: 100%;
+          overflow-x: hidden;
+          touch-action: manipulation;
+        }
+
+        input,
+        select,
+        textarea {
+          font-size: 16px !important;
+        }
+
+        .task-dialog,
+        .info-dialog {
+          max-width: calc(100vw - 20px);
+          overflow-x: hidden;
+        }
+
+        .task-dialog form,
+        .info-dialog {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
+      }
+    \`;
+    document.head.appendChild(style);
+  }
+
   if (!document.querySelector('link[data-agenda-mobile]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
