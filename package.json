@@ -1,0 +1,13 @@
+{
+  "name": "agenda-thomaz",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/generate-runtime-config.mjs",
+    "check": "node --check app.js && node --check bridge.js && node --check scripts/generate-runtime-config.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
