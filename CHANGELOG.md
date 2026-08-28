@@ -1,5 +1,12 @@
 # Histórico de versões
 
+## 2.0.1 - 28/08/2026
+
+- corrige o evento FB & Família de domingo para sábado, 29/08/2026;
+- migra automaticamente dados já salvos no aparelho;
+- corrige também cópias antigas recebidas da sincronização em nuvem;
+- atualiza o cache da PWA para distribuir a correção no iPhone.
+
 ## 2.0.0 - 28/08/2026
 
 - adiciona camada opcional de nuvem com Firebase Authentication e Firestore;
