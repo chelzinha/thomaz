@@ -193,8 +193,8 @@
 
   function enhanceAvatars() {
     document.querySelectorAll('.avatar-button').forEach(button => {
-      const name = button.dataset.profile;
-      if (PROFILE_ICONS[name]) button.textContent = PROFILE_ICONS[name];
+      const icon = PROFILE_ICONS[button.dataset.profile];
+      if (icon && button.textContent !== icon) button.textContent = icon;
     });
   }
 
@@ -280,7 +280,7 @@
     buildRewardDialog();
     refresh();
     watchRenders();
-    document.querySelector('#familyAvatars')?.addEventListener('click', () => window.setTimeout(updateProfile, 0));
+    document.querySelector('#familyAvatars')?.addEventListener('click', () => window.setTimeout(refresh, 0));
     window.addEventListener('agenda:state-changed', refresh);
   }
 
