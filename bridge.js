@@ -13,6 +13,33 @@
 
   const emit = (name, detail) => window.dispatchEvent(new CustomEvent(name, { detail }));
 
+  function normalizeKnownDates(tasks) {
+    let changed = false;
+    const normalized = (Array.isArray(tasks) ? tasks : []).map(task => {
+      const title = String(task?.title || '');
+      const details = String(task?.details || '');
+      const isFbFamily = /fb\s*&\s*fam[ií]lia/i.test(title)
+        && /dia dos pais/i.test(details);
+
+      if (isFbFamily && task.date !== '2026-08-29') {
+        changed = true;
+        return {
+          ...task,
+          date: '2026-08-29',
+          time: task.time || '09:40'
+        };
+      }
+      return task;
+    });
+    return { tasks: normalized, changed };
+  }
+
+  const initialMigration = normalizeKnownDates(state.tasks);
+  if (initialMigration.changed) {
+    state = { ...state, tasks: initialMigration.tasks };
+    nativeSaveState();
+  }
+
   saveState = function saveStateWithCloudSignal() {
     nativeSaveState();
     if (!applyingRemoteState) emit('agenda:state-changed', { state: clone(state) });
@@ -36,16 +63,18 @@
   };
 
   window.AgendaThomaz = {
-    version: '2.0.0',
+    version: '2.0.1',
     getState: () => clone(state),
     getSettings: () => clone(settings),
 
     applyCloudTasks(tasks) {
+      const normalized = normalizeKnownDates(tasks);
       applyingRemoteState = true;
-      state = { ...state, tasks: Array.isArray(tasks) ? tasks.map(task => ({ ...task })) : [] };
+      state = { ...state, tasks: normalized.tasks.map(task => ({ ...task })) };
       nativeSaveState();
       renderAll();
       applyingRemoteState = false;
+      if (normalized.changed) emit('agenda:state-changed', { state: clone(state) });
     },
 
     mergeCalendarEvents(calendarTasks) {
